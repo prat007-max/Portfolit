@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cinematic Resume with GSAP</title>
+
+  <style>
+    /* Your existing styles here... */
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      font-family: 'Poppins', sans-serif;
+      background: #0f2027;
+      color: white;
+    }
+    section {
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      background: #101820;
+    }
+    section:nth-child(even) { background: #18222e; }
+    h1, h2 {
+      color: #0ff;
+      text-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+    }
+    h1 { font-size: 4em; margin-bottom: 10px; }
+    h2 { font-size: 2.5em; margin-bottom: 10px; }
+    p {
+      max-width: 700px;
+      font-size: 1.2em;
+      line-height: 1.5;
+      opacity: 1; /* Default visible, gsap will animate */
+    }
+  </style>
+</head>
+<body>
+
+  <section class="banner">
+    <h1>Your Name</h1>
+    <p>Aerospace Engineer | Combustion Specialist</p>
+  </section>
+
+  <section>
+    <h2>Chapter 1: Education</h2>
+    <p>Bachelor's in Mechanical Engineering, Master's in Aerospace Engineering with combustion research.</p>
+  </section>
+
+  <section>
+    <h2>Chapter 2: Research</h2>
+    <p>Worked on flame propagation, turbulent boundary layers, and ultrafast laser diagnostics.</p>
+  </section>
+
+  <section>
+    <h2>Chapter 3: Projects</h2>
+    <p>Ammonia SI Engine Combustion | Hydrogen Sequential Combustion | SAF vs NH3 NOx studies.</p>
+  </section>
+
+  <section>
+    <h2>Chapter 4: Contact</h2>
+    <p>Email: yourname@email.com</p>
+  </section>
+
+  <!-- GSAP and ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('section').forEach(section => {
+      gsap.from(section.querySelector('h1, h2'), {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.out',
+      });
+
+      const paragraph = section.querySelector('p');
+      if (paragraph) {
+        gsap.from(paragraph, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 75%',
+            toggleActions: 'play none none reverse',
+          },
+          y: 30,
+          opacity: 0,
+          duration: 1,
+          delay: 0.3,
+          ease: 'power2.out',
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
